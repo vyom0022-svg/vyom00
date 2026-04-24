@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vyom — Future Merchant Navy Officer</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Outfit:wght@300;400;500&family=DM+Mono&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --red:    #E8193C;
+      --red2:   #FF4560;
+      --blue:   #1B3FEE;
+      --blue2:  #4D7CFF;
+      --dark:   #08060F;
+      --card:   #110D1E;
+      --white:  #FFF0F3;
+      --muted:  rgba(255,240,243,.55);
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      background: var(--dark);
+      color: var(--white);
+      font-family: 'Outfit', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      overflow: hidden;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    /* blurred colour blobs */
+    .blob {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      pointer-events: none;
+      opacity: .55;
+    }
+    .blob-r {
+      width: 520px; height: 520px;
+      background: var(--red);
+      top: -120px; left: -100px;
+      animation: drift 9s ease-in-out infinite alternate;
+    }
+    .blob-b {
+      width: 480px; height: 480px;
+      background: var(--blue);
+      bottom: -100px; right: -80px;
+      animation: drift 11s ease-in-out infinite alternate-reverse;
+    }
+    .blob-r2 {
+      width: 300px; height: 300px;
+      background: var(--red2);
+      bottom: 20%; left: 30%;
+      opacity: .25;
+      animation: drift 7s ease-in-out infinite alternate;
+    }
+    @keyframes drift {
+      from { transform: translate(0,0) scale(1); }
+      to   { transform: translate(30px,20px) scale(1.1); }
+    }
+
+    /* grain overlay */
+    .grain {
+      position: fixed; inset: 0; z-index: 0; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.04'/%3E%3C/svg%3E");
+      opacity: .4;
+    }
+
+    .hero-inner { position: relative; z-index: 2; }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      font-family: 'DM Mono', monospace;
+      font-size: .68rem;
+      letter-spacing: .2em;
+      text-transform: uppercase;
+      color: var(--red2);
+      border: 1px solid rgba(232,25,60,.4);
+      background: rgba(232,25,60,.08);
+      padding: .38rem 1.1rem;
+      border-radius: 4px;
+      margin-bottom: 2rem;
+      animation: up .8s .1s ease both;
+    }
+
+    h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 20vw, 13rem);
+      line-height: .88;
+      letter-spacing: .02em;
+      animation: up .8s .25s ease both;
+    }
+    h1 .blue-out {
+      -webkit-text-stroke: 3px var(--blue2);
+      color: transparent;
+    }
+
+    .tagline {
+      margin-top: 1.2rem;
+      font-size: clamp(.9rem, 2.5vw, 1.15rem);
+      color: var(--muted);
+      font-weight: 300;
+      letter-spacing: .06em;
+      animation: up .8s .4s ease both;
+    }
+
+    .hero-icons {
+      margin-top: 1.8rem;
+      font-size: 2rem;
+      display: flex;
+      justify-content: center;
+      gap: 1.2rem;
+      animation: up .8s .55s ease both;
+    }
+    .hero-icons span {
+      display: inline-block;
+      animation: float 3s ease-in-out infinite;
+    }
+    .hero-icons span:nth-child(2) { animation-delay: .5s; }
+    .hero-icons span:nth-child(3) { animation-delay: 1s; }
+    @keyframes float {
+      0%,100% { transform: translateY(0); }
+      50%      { transform: translateY(-8px); }
+    }
+
+    @keyframes up {
+      from { opacity:0; transform: translateY(35px); }
+      to   { opacity:1; transform: translateY(0); }
+    }
+
+    /* ── SECTIONS ── */
+    .section {
+      max-width: 880px;
+      margin: 0 auto;
+      padding: 5rem 1.5rem;
+      position: relative;
+      z-index: 2;
+    }
+
+    .s-tag {
+      font-family: 'DM Mono', monospace;
+      font-size: .62rem;
+      letter-spacing: .22em;
+      text-transform: uppercase;
+      color: var(--blue2);
+      margin-bottom: .6rem;
+    }
+    .s-head {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.2rem, 7vw, 4rem);
+      line-height: 1;
+      margin-bottom: .7rem;
+    }
+    .s-rule {
+      width: 50px; height: 3px;
+      background: linear-gradient(to right, var(--red), var(--blue));
+      border-radius: 2px;
+      margin-bottom: 2.2rem;
+    }
+
+    /* ── DREAM CARD ── */
+    .dream-card {
+      background: var(--card);
+      border: 1px solid rgba(232,25,60,.2);
+      border-radius: 18px;
+      padding: 2.4rem 2.6rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .dream-card::before {
+      content: '⚓';
+      position: absolute;
+      right: 1.5rem; top: .8rem;
+      font-size: 6rem;
+      opacity: .05;
+    }
+    .dream-card::after {
+      content: '';
+      position: absolute;
+      bottom: -40px; right: -40px;
+      width: 160px; height: 160px;
+      background: radial-gradient(circle, rgba(27,63,238,.35), transparent 70%);
+      border-radius: 50%;
+    }
+    .dream-card p {
+      font-size: 1.1rem;
+      line-height: 1.85;
+      color: var(--muted);
+    }
+    .dream-card strong { color: var(--red2); }
+
+    /* ── ROADMAP ── */
+    .roadmap { padding-left: 2rem; position: relative; }
+    .roadmap::before {
+      content: '';
+      position: absolute;
+      left: 7px; top: 8px; bottom: 8px;
+      width: 2px;
+      background: linear-gradient(to bottom, var(--red), var(--blue), rgba(77,124,255,.1));
+    }
+    .r-step { position: relative; margin-bottom: 2.2rem; }
+    .r-step::before {
+      content: '';
+      position: absolute;
+      left: -2rem; top: 6px;
+      width: 14px; height: 14px;
+      border-radius: 50%;
+      background: var(--dark);
+      border: 2px solid rgba(255,255,255,.2);
+    }
+    .r-step.done::before  { background: var(--red); border-color: var(--red); box-shadow: 0 0 10px rgba(232,25,60,.6); }
+    .r-step.now::before   { background: var(--blue2); border-color: var(--blue2); box-shadow: 0 0 14px rgba(77,124,255,.8); animation: glow 1.6s ease-in-out infinite; }
+    @keyframes glow {
+      0%,100% { box-shadow: 0 0 6px rgba(77,124,255,.5); }
+      50%      { box-shadow: 0 0 20px rgba(77,124,255,.9); }
+    }
+    .r-label {
+      font-family: 'DM Mono', monospace;
+      font-size: .62rem;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+      margin-bottom: .3rem;
+      color: rgba(255,255,255,.35);
+    }
+    .r-step.done .r-label { color: var(--red2); }
+    .r-step.now  .r-label { color: var(--blue2); }
+    .r-title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.45rem;
+      margin-bottom: .25rem;
+    }
+    .r-desc { font-size: .92rem; color: var(--muted); line-height: 1.65; }
+
+    /* ── STATS ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(155px, 1fr));
+      gap: 1rem;
+    }
+    .stat {
+      background: var(--card);
+      border-radius: 14px;
+      padding: 1.7rem 1.2rem;
+      text-align: center;
+      border: 1px solid rgba(255,255,255,.07);
+      transition: transform .25s, border-color .25s;
+      position: relative;
+      overflow: hidden;
+    }
+    .stat:nth-child(odd)  { border-top: 2px solid var(--red); }
+    .stat:nth-child(even) { border-top: 2px solid var(--blue2); }
+    .stat:hover { transform: translateY(-6px); }
+    .stat-icon { font-size: 1.8rem; display: block; margin-bottom: .5rem; }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 3rem;
+      line-height: 1;
+      background: linear-gradient(135deg, var(--red2), var(--blue2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-lbl {
+      font-family: 'DM Mono', monospace;
+      font-size: .58rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--muted);
+      opacity: .6;
+      margin-top: .35rem;
+    }
+
+    /* ── ABOUT GRID ── */
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1rem;
+    }
+    @media(max-width:540px){ .about-grid{ grid-template-columns:1fr; } }
+    .a-card {
+      background: var(--card);
+      border: 1px solid rgba(255,255,255,.07);
+      border-radius: 14px;
+      padding: 1.5rem 1.7rem;
+      transition: transform .25s;
+    }
+    .a-card:hover { transform: translateY(-4px); }
+    .a-card .ic { font-size: 1.6rem; margin-bottom: .6rem; }
+    .a-card h4 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.15rem;
+      letter-spacing: .05em;
+      margin-bottom: .35rem;
+      background: linear-gradient(90deg, var(--red2), var(--blue2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .a-card p { font-size: .9rem; color: var(--muted); line-height: 1.6; }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 3.5rem 1rem 4.5rem;
+      border-top: 1px solid rgba(255,255,255,.07);
+      position: relative;
+      z-index: 2;
+    }
+    .ft-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      background: linear-gradient(135deg, var(--red), var(--blue2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: block;
+      margin-bottom: .7rem;
+    }
+    footer p {
+      font-family: 'DM Mono', monospace;
+      font-size: .62rem;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      color: rgba(255,240,243,.25);
+    }
+
+    /* ── REVEAL ── */
+    .reveal { opacity:0; transform:translateY(28px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity:1; transform:none; }
+  </style>
+</head>
+<body>
+
+<div class="grain"></div>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="blob blob-r"></div>
+  <div class="blob blob-b"></div>
+  <div class="blob blob-r2"></div>
+
+  <div class="hero-inner">
+    <div class="badge">⚓ Future Merchant Navy Officer</div>
+    <h1>VY<span class="blue-out">OM</span></h1>
+    <p class="tagline">SVPV Graduate &nbsp;·&nbsp; Cricket Champion &nbsp;·&nbsp; Seafarer in the Making</p>
+    <div class="hero-icons">
+      <span>🚢</span>
+      <span>🏏</span>
+      <span>🎓</span>
+    </div>
+  </div>
+</div>
+
+<!-- DREAM -->
+<div class="section reveal">
+  <p class="s-tag">My Ambition</p>
+  <h2 class="s-head">The Dream</h2>
+  <div class="s-rule"></div>
+  <div class="dream-card">
+    <p>
+      My goal is to become a <strong>Merchant Navy Officer</strong> — sailing oceans,
+      navigating international waters, and commanding vessels across the globe.
+      The sea demands discipline, courage, and leadership —
+      qualities I've built on the cricket pitch and in the classrooms of
+      <strong>SVPV School</strong>. The ocean is calling, and I'm ready. ⚓
+    </p>
+  </div>
+</div>
+
+<!-- ROADMAP -->
+<div class="section reveal" style="padding-top:0">
+  <p class="s-tag">The Journey</p>
+  <h2 class="s-head">My Roadmap</h2>
+  <div class="s-rule"></div>
+  <div class="roadmap">
+
+    <div class="r-step done">
+      <div class="r-label">✓ Done</div>
+      <div class="r-title">Graduate from SVPV School</div>
+      <div class="r-desc">Built the academic base — science, math, discipline. The first step on every voyage starts on land.</div>
+    </div>
+
+    <div class="r-step done">
+      <div class="r-label">✓ Done</div>
+      <div class="r-title">Win 3 Cricket Tournaments</div>
+      <div class="r-desc">Leadership under pressure, teamwork, and strategy — the exact qualities a Merchant Navy Officer needs.</div>
+    </div>
+
+    <div class="r-step now">
+      <div class="r-label">🎯 Current Goal</div>
+      <div class="r-title">Enrol in DNS / Marine Engineering Course</div>
+      <div class="r-desc">Join a Deck Nautical Science (DNS) programme from an IMO-approved institute to begin the official path.</div>
+    </div>
+
+    <div class="r-step">
+      <div class="r-label">Upcoming</div>
+      <div class="r-title">Complete Pre-Sea Training</div>
+      <div class="r-desc">6–12 months of training in navigation, seamanship, safety drills and maritime law.</div>
+    </div>
+
+    <div class="r-step">
+      <div class="r-label">Upcoming</div>
+      <div class="r-title">First Voyage as Deck Cadet</div>
+      <div class="r-desc">Board a commercial vessel, gain sea-time, and learn under experienced officers.</div>
+    </div>
+
+    <div class="r-step">
+      <div class="r-label">Destination 🌍</div>
+      <div class="r-title">Earn Officer of the Watch Certificate</div>
+      <div class="r-desc">Clear MMD exams and become a certified Merchant Navy Officer — sailing the world's oceans.</div>
+    </div>
+
+  </div>
+</div>
+
+<!-- STATS -->
+<div class="section reveal" style="padding-top:0">
+  <p class="s-tag">Numbers</p>
+  <h2 class="s-head">At A Glance</h2>
+  <div class="s-rule"></div>
+  <div class="stats-grid">
+    <div class="stat">
+      <span class="stat-icon">🏆</span>
+      <div class="stat-num">3</div>
+      <div class="stat-lbl">Cricket Titles</div>
+    </div>
+    <div class="stat">
+      <span class="stat-icon">🏫</span>
+      <div class="stat-num">1</div>
+      <div class="stat-lbl">School Completed</div>
+    </div>
+    <div class="stat">
+      <span class="stat-icon">🌊</span>
+      <div class="stat-num">0</div>
+      <div class="stat-lbl">Limits At Sea</div>
+    </div>
+    <div class="stat">
+      <span class="stat-icon">⚓</span>
+      <div class="stat-num">∞</div>
+      <div class="stat-lbl">Ambition</div>
+    </div>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<div class="section reveal" style="padding-top:0; padding-bottom:6rem;">
+  <p class="s-tag">Profile</p>
+  <h2 class="s-head">About Vyom</h2>
+  <div class="s-rule"></div>
+  <div class="about-grid">
+    <div class="a-card">
+      <div class="ic">🎓</div>
+      <h4>Education</h4>
+      <p>Proud graduate of SVPV School with strong academics in science and mathematics.</p>
+    </div>
+    <div class="a-card">
+      <div class="ic">🏏</div>
+      <h4>Cricket</h4>
+      <p>3-time tournament champion. A natural team leader and competitor.</p>
+    </div>
+    <div class="a-card">
+      <div class="ic">🚢</div>
+      <h4>Career Goal</h4>
+      <p>Merchant Navy Officer — commanding vessels on international trade routes.</p>
+    </div>
+    <div class="a-card">
+      <div class="ic">🌍</div>
+      <h4>Vision</h4>
+      <p>To explore the world's seas, grow into a ship captain, and inspire others.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <span class="ft-logo">VYOM</span>
+  <p>SVPV Graduate · 3× Cricket Champion · Future Merchant Navy Officer</p>
+</footer>
+
+<script>
+  const els = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); io.unobserve(e.target); }
+    });
+  }, { threshold: 0.12 });
+  els.forEach(el => io.observe(el));
+</script>
+</body>
+</html>
